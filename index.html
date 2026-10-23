@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Gaegu:wght@700&family=Gochi+Hand&family=Baloo+2:wght@800&family=Mrs+Saint+Delafield&family=Allura&family=Caveat:wght@600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+/* ===== Stage: fixed 1000x600 design, scaled to fit any screen ===== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#000;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{position:relative;width:1000px;height:600px;flex:none;transform-origin:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 55%,#fff 45%,#f7eaed 75%,#efd9de 100%)}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.scene.on{opacity:1;pointer-events:auto}
+.red{color:#c8372d;font-family:'Gaegu','Gochi Hand',cursive;font-weight:700}
+img{user-select:none;-webkit-user-drag:none}
+
+/* ===== Scene 1: gift ===== */
+.big{font-family:'Poppins',sans-serif;font-weight:800;color:#2b2326;font-size:44px;letter-spacing:.5px;
+  position:absolute;top:44px;left:0;right:0;text-align:center;text-transform:uppercase}
+.pbox{position:absolute;left:50%;top:150px;width:260px;height:270px;margin-left:-130px;animation:bob 1.6s ease-in-out infinite}
+.pbox img{width:100%;height:100%;object-fit:contain}
+.shadow{position:absolute;left:50%;top:430px;width:90px;height:14px;margin-left:-45px;border-radius:50%;background:#bdb9a6;opacity:.7;animation:shadow 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px)}}
+@keyframes shadow{50%{transform:scale(.7);opacity:.4}}
+.hearts i{position:absolute;font-style:normal;color:#f06c9b;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px) scale(1.1)}}
+.btn{font-family:'Poppins',sans-serif;font-weight:800;color:#fff;background:#e8481c;border:0;border-radius:40px;
+  font-size:30px;padding:8px 34px 10px;cursor:pointer;position:absolute;text-transform:uppercase;
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);transition:transform .15s}
+.btn span{border-bottom:3px solid #fff;line-height:1;display:inline-block}
+.btn:before{content:"";position:absolute;left:10px;bottom:8px;width:14px;height:14px;border:3px solid #fff;border-top:0;border-right:0;border-radius:0 0 0 14px;transform:rotate(-20deg)}
+.btn:after{content:"";position:absolute;right:10px;top:8px;width:16px;height:16px;border:3px solid #fff;border-bottom:0;border-left:0;border-radius:0 16px 0 0;transform:rotate(15deg)}
+.btn:hover{transform:scale(1.07)}.btn:active{transform:scale(.95)}
+#yes{left:270px;top:490px}#no{left:520px;top:490px}#again{left:50%;margin-left:-100px;top:490px}
+#s-no .pbox{animation:spin 1.8s ease-in-out infinite}
+@keyframes spin{0%,100%{transform:rotate(-14deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-12px)}}
+
+/* ===== Scene 2: choose penguin ===== */
+#s-choose .t1{position:absolute;top:36px;left:0;right:0;text-align:center;font-size:30px;min-height:40px}
+#s-choose .t2{position:absolute;top:92px;left:0;right:0;text-align:center;font-size:30px;min-height:40px}
+.pg{position:absolute;top:190px;width:210px;height:300px;cursor:pointer;opacity:0;transition:opacity 1s,transform .25s}
+.pg.show{opacity:1}.pg.show:hover{transform:translateY(-8px) scale(1.04)}
+.pg img{width:100%;height:100%;object-fit:contain}
+#pg1{left:150px}#pg2{left:395px}#pg3{left:640px}
+
+/* ===== next heart button ===== */
+.next{position:absolute;right:16px;bottom:22px;width:62px;height:56px;border:0;background:none;cursor:pointer;
+  font-family:'Patrick Hand',cursive;font-size:10px;line-height:11px;color:#9a8a8a;z-index:20;animation:pulse 1.6s ease-in-out infinite}
+.next svg{position:absolute;inset:0;width:100%;height:100%}
+.next b{position:relative;font-weight:400;letter-spacing:.5px;display:block;padding-top:14px}
+@keyframes pulse{50%{transform:scale(1.1)}}
+
+/* ===== Birthday card ===== */
+#s-bday{background:linear-gradient(135deg,#f1ecf8,#fff 55%,#f6f1fa)}
+.bd-title{position:absolute;left:300px;top:30px;font-family:'Gochi Hand',cursive;font-size:84px;line-height:.95;color:#e0306b;text-align:center;
+  text-shadow:1px 1px 0 #fff;transform:scaleY(1.05);letter-spacing:2px;animation:pop 1.2s ease both}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.chick{position:absolute;left:100px;top:60px;width:110px}
+.bd-peng{position:absolute;left:310px;top:240px;width:320px;animation:bob 2s ease-in-out infinite}
+.wish{position:absolute;left:230px;top:300px;transform:rotate(-38deg);font-family:'Patrick Hand';font-size:12px;letter-spacing:2px;color:#b9b5c8}
+.spark{position:absolute;color:#f2b6cf;animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{50%{opacity:.3;transform:scale(.7) rotate(20deg)}}
+.stuff{position:absolute;left:720px;top:470px;width:180px}
+
+/* ===== Diary scenes ===== */
+.plaid{background-color:#fbe9ee;
+  background-image:linear-gradient(90deg,rgba(236,170,190,.45) 50%,transparent 50%),linear-gradient(rgba(236,170,190,.45) 50%,transparent 50%);
+  background-size:44px 44px}
+.diary{position:absolute;left:78px;top:38px;right:46px;bottom:34px;background:#fff;border-radius:12px;
+  box-shadow:0 0 0 6px rgba(255,255,255,.6),0 8px 24px rgba(0,0,0,.08);
+  background-image:repeating-linear-gradient(transparent 0 25px,#dfe4ef 25px 26px)}
+.cam{position:absolute;left:30px;top:22px;width:130px;z-index:5}
+.jar{position:absolute;left:480px;top:8px;width:90px;z-index:5}
+.sw{position:absolute;opacity:0;transition:opacity 1s,transform 1s;transform:scale(.7)}
+.sw.in{opacity:1;transform:none}
+.heartframe{position:absolute;clip-path:path('M0 0');}
+.hf{position:absolute;overflow:hidden;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 92C-20 40 12 2 36 6c10 2 14 8 14 14 0-6 4-12 14-14 24-4 56 34-14 86z' fill='black'/></svg>") center/100% 100% no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 92C-20 40 12 2 36 6c10 2 14 8 14 14 0-6 4-12 14-14 24-4 56 34-14 86z' fill='black'/></svg>") center/100% 100% no-repeat}
+.hf img{width:100%;height:100%;object-fit:cover}
+.letterTitle{position:absolute;left:560px;top:62px;font-family:'Gochi Hand';font-size:40px;color:#e9648c;letter-spacing:1px}
+.letter{position:absolute;left:500px;top:120px;width:300px;text-align:center;font-family:'Patrick Hand',cursive;font-size:13.2px;line-height:19.6px;color:#4a4047}
+.cutie{position:absolute;left:225px;top:420px;font-family:'Baloo 2';font-weight:800;font-size:26px;color:#6b6670}
+.script{position:absolute;font-family:'Mrs Saint Delafield','Allura',cursive;color:#3a3236}
+.small{position:absolute;font-family:'Caveat',cursive;font-weight:600;font-size:21px;color:#3a3236}
+
+/* ===== Will you be mine ===== */
+#s-mine{background:radial-gradient(ellipse at 50% 50%,#fff 40%,#f6e6ea 100%)}
+.bigheart{position:absolute;left:150px;top:55px;width:700px;height:500px;opacity:.7}
+.mine-t{position:absolute;top:26px;left:0;right:0;text-align:center;font-size:46px;transform:rotate(-3deg);transition:color 1s}
+.mine-photo{position:absolute;left:330px;top:100px;width:340px;height:340px}
+.mine-photo2{position:absolute;left:215px;top:240px;width:150px;height:150px}
+.mine-photo3{position:absolute;left:625px;top:265px;width:150px;height:150px}
+.date{position:absolute;left:0;right:0;top:440px;text-align:center;font-family:'Allura','Mrs Saint Delafield',cursive;font-size:30px;color:#c9aab3;letter-spacing:3px;font-style:italic}
+.squig{position:absolute;top:210px;width:200px;opacity:0;transition:opacity 1.2s}
+.squig.in{opacity:1}
+
+/* ===== Hug ===== */
+#s-hug{background:radial-gradient(ellipse at 50% 55%,#fff 50%,#f4e6ea 100%)}
+.hugheart{position:absolute;left:150px;top:60px;width:700px;height:520px}
+.hug-t{position:absolute;top:44px;left:0;right:0;text-align:center;font-size:46px;transform:rotate(-4deg)}
+.hug-a{position:absolute;left:330px;top:150px;width:360px;height:280px}
+.hug-a img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;transition:opacity .4s}
+.miss{position:absolute;left:0;right:0;top:450px;text-align:center;font-family:'Poppins';font-weight:800;color:#c8372d;font-size:50px;letter-spacing:1px;min-height:70px}
+
+/* ===== I love you ===== */
+#s-love{background:#fff}
+#s-love:before,#s-love:after{content:"";position:absolute;left:0;right:0;height:62px;background:#f58220;border-bottom:36px solid #f2a58f;box-sizing:content-box}
+#s-love:before{top:0}
+#s-love:after{bottom:0;border-bottom:0;border-top:36px solid #f2a58f}
+.love-t{position:absolute;left:70px;right:70px;top:110px;font-family:'Baloo 2';font-weight:800;font-size:150px;line-height:1.05;color:#eca38e;letter-spacing:6px;word-break:break-word}
+
+.hint{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:11px;color:#bbb;font-family:sans-serif;display:none}
+.cursor::after{content:"";}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+
+<!-- 1. GIFT -->
+<section class="scene on" id="s-gift">
+  <div class="big">Pls accept the gift</div>
+  <div class="hearts">
+    <i style="left:330px;top:215px;font-size:30px;animation-delay:.1s">♥</i>
+    <i style="left:395px;top:170px;font-size:34px;animation-delay:.5s">♥</i>
+    <i style="left:585px;top:180px;font-size:26px;animation-delay:.9s">♥</i>
+    <i style="left:640px;top:205px;font-size:38px;animation-delay:.3s">♥</i>
+    <i style="left:630px;top:290px;font-size:34px;animation-delay:.7s">♥</i>
+    <i style="left:350px;top:310px;font-size:44px;animation-delay:.2s">♥</i>
+    <i style="left:395px;top:360px;font-size:26px;animation-delay:.6s;opacity:.6">♥</i>
+    <i style="left:435px;top:135px;font-size:22px;color:#e56fa0;animation-delay:.4s">✦</i>
+    <i style="left:545px;top:150px;font-size:16px;color:#e56fa0;animation-delay:.8s">✦</i>
+  </div>
+  <div class="pbox"><img data-asset="penguin-happy" alt=""></div>
+  <div class="shadow"></div>
+  <button class="btn" id="yes"><span>Yes</span></button>
+  <button class="btn" id="no"><span>No</span></button>
+</section>
+
+<!-- 1b. NO -->
+<section class="scene" id="s-no">
+  <div class="big" style="font-size:42px;transform:rotate(2deg)">Why did you click no!</div>
+  <div class="pbox" style="top:130px"><img data-asset="penguin-cry" alt=""></div>
+  <button class="btn" id="again"><span>Try again</span></button>
+</section>
+
+<!-- 2. CHOOSE -->
+<section class="scene" id="s-choose">
+  <div class="t1 red"></div><div class="t2 red"></div>
+  <div class="pg" id="pg1"><img data-asset="penguin-gift" alt=""></div>
+  <div class="pg" id="pg2"><img data-asset="penguin-gift" alt=""></div>
+  <div class="pg" id="pg3"><img data-asset="penguin-gift" alt=""></div>
+</section>
+
+<!-- 3. HAPPY BIRTHDAY -->
+<section class="scene" id="s-bday">
+  <img class="chick" data-asset="chick" alt="">
+  <div class="bd-title">HAPPY<br>BIRTHDAY</div>
+  <span class="spark" style="left:110px;top:90px;font-size:38px">✦</span>
+  <span class="spark" style="left:150px;top:200px;font-size:26px;animation-delay:.6s">✦</span>
+  <span class="spark" style="left:850px;top:70px;font-size:34px;animation-delay:.3s">✦</span>
+  <span class="spark" style="left:880px;top:170px;font-size:24px;animation-delay:.9s">✦</span>
+  <div class="wish">MAKE A WISH</div>
+  <img class="bd-peng" data-asset="penguin-bday" alt="">
+  <img class="stuff" data-asset="party-stuff" alt="">
+  <button class="next" data-next="diary1"><svg viewBox="0 0 62 56"><path d="M31 54C-10 28 6 2 22 4c6 1 9 5 9 9 0-4 3-8 9-9 16-2 32 24-9 50z" fill="#f3e6e8" stroke="#e8d2d6"/></svg><b>CLICK<br>ME</b></button>
+</section>
+
+<!-- 4. DIARY 1 : photo + letter -->
+<section class="scene plaid" id="s-diary1">
+  <div class="diary"></div>
+  <img class="cam sw" data-asset="camera" alt="">
+  <img class="jar sw" data-asset="jar" alt="">
+  <div class="hf sw" style="left:150px;top:155px;width:290px;height:290px"><img data-asset="photo-main" alt=""></div>
+  <div class="cutie sw">Cutie🤍</div>
+  <div class="letterTitle sw">HAPPY BIRTHDAY</div>
+  <div class="letter sw" id="letter">Happy Birthday, my love ❤️<br>It's your special day…<br>And every reminder of you makes my heart smile.<br>Somewhere in your laughter and happiness,<br>my whole world awaits. ✨<br>You are the kind of person<br>who turns ordinary moments into beautiful memories.<br>Every second with you feels soft, warm, and special.<br>No matter how many birthdays come and go,<br>I'll always choose you, every single time.<br>You're my always and forever. 🌙<br>My safe place, my happiness, my favorite person.<br>I hope this year brings you endless smiles, peace,<br>success,<br>and all the love your heart deserves.<br>And whenever life gets difficult,<br>just remember – I'll always be right beside you. ❤️<br>Happy Birthday again, my girl. 🫶</div>
+  <img class="sw" data-asset="bunny" style="left:0;bottom:-6px;width:150px" alt="">
+  <img class="sw" data-asset="mouse" style="right:6px;bottom:20px;width:130px" alt="">
+  <button class="next" data-next="choose"><svg viewBox="0 0 62 56"><path d="M31 54C-10 28 6 2 22 4c6 1 9 5 9 9 0-4 3-8 9-9 16-2 32 24-9 50z" fill="#f3e6e8" stroke="#e8d2d6"/></svg><b>CLICK<br>ME</b></button>
+</section>
+
+<!-- 5. DIARY 2 : collage -->
+<section class="scene plaid" id="s-diary2">
+  <div class="diary"></div>
+  <img class="cam sw" data-asset="camera" alt="">
+  <div class="hf sw" style="left:195px;top:70px;width:170px;height:170px"><img data-asset="photo-1" alt=""></div>
+  <div class="hf sw" style="left:710px;top:92px;width:150px;height:170px"><img data-asset="photo-2" alt=""></div>
+  <div class="hf sw" style="left:430px;top:270px;width:190px;height:170px"><img data-asset="photo-3" alt=""></div>
+  <div class="hf sw" style="left:225px;top:395px;width:190px;height:170px"><img data-asset="photo-4" alt=""></div>
+  <div class="hf sw" style="left:710px;top:405px;width:190px;height:150px"><img data-asset="photo-5" alt=""></div>
+  <div class="script sw" style="left:400px;top:50px;font-size:64px">Beautiful</div>
+  <div class="small sw" style="left:370px;top:290px;font-size:20px">My love</div>
+  <div class="small sw" style="left:680px;top:305px;font-size:20px">My Baby</div>
+  <div class="script sw" style="left:500px;top:450px;font-size:62px;transform:rotate(-12deg)">My girlfriend</div>
+  <img class="sw" data-asset="cake" style="left:100px;bottom:40px;width:100px" alt="">
+  <img class="sw" data-asset="flowers" style="right:0;bottom:30px;width:120px" alt="">
+  <button class="next" data-next="mine"><svg viewBox="0 0 62 56"><path d="M31 54C-10 28 6 2 22 4c6 1 9 5 9 9 0-4 3-8 9-9 16-2 32 24-9 50z" fill="#f3e6e8" stroke="#e8d2d6"/></svg><b>CLICK<br>ME</b></button>
+</section>
+
+<!-- 6. HAPPY BIRTH DAY -->
+<section class="scene" id="s-mine">
+  <svg class="bigheart" viewBox="0 0 100 90"><path d="M50 86C-14 40 8 0 32 4c10 2 18 8 18 16 0-8 8-14 18-16 24-4 46 36-18 82z" fill="#f4dce3"/></svg>
+  <div class="mine-t red" style="color:#c8372d">HAPPY BIRTH DAY</div>
+  <svg class="squig" id="sq1" style="left:0" viewBox="0 0 200 100"><path d="M0 60C40 50 60 30 90 40s0 40-20 20 40-30 130-6" fill="none" stroke="#6b3c4a" stroke-width="2"/></svg>
+  <svg class="squig" id="sq2" style="right:0;transform:scaleX(-1)" viewBox="0 0 200 100"><path d="M0 60C40 50 60 30 90 40s0 40-20 20 40-30 130-6" fill="none" stroke="#6b3c4a" stroke-width="2"/></svg>
+  <div class="hf sw" id="m1" style="left:300px;top:100px;width:400px;height:360px"><img data-asset="couple-main" alt=""></div>
+  <div class="hf sw" id="m2" style="left:200px;top:290px;width:170px;height:150px"><img data-asset="couple-2" alt=""></div>
+  <div class="hf sw" id="m3" style="left:640px;top:310px;width:170px;height:140px"><img data-asset="couple-3" alt=""></div>
+  <div class="date sw">24 . 10 . 2026</div>
+  <button class="next" data-next="choose"><svg viewBox="0 0 62 56"><path d="M31 54C-10 28 6 2 22 4c6 1 9 5 9 9 0-4 3-8 9-9 16-2 32 24-9 50z" fill="#f3e6e8" stroke="#e8d2d6"/></svg><b>CLICK<br>ME</b></button>
+</section>
+
+<!-- 7. HUG -->
+<section class="scene" id="s-hug">
+  <svg class="hugheart" viewBox="0 0 100 90"><path d="M50 86C-14 40 8 0 32 4c10 2 18 8 18 16 0-8 8-14 18-16 24-4 46 36-18 82z" fill="#f4dfe5"/></svg>
+  <div class="hug-t red" style="font-size:46px">Virtual hug for ya!</div>
+  <div class="hug-a"><img data-asset="bears-apart" id="apart" alt=""><img data-asset="bears-hug" id="hugged" style="opacity:0" alt=""></div>
+  <div class="miss" id="miss"></div>
+  <button class="next" data-next="love"><svg viewBox="0 0 62 56"><path d="M31 54C-10 28 6 2 22 4c6 1 9 5 9 9 0-4 3-8 9-9 16-2 32 24-9 50z" fill="#f3e6e8" stroke="#e8d2d6"/></svg><b>CLICK<br>ME</b></button>
+</section>
+
+<!-- 8. I LOVE YOU -->
+<section class="scene" id="s-love">
+  <div class="love-t" id="love"></div>
+</section>
+
+</div></div>
+
+<script>
+/* ---------- scale stage to screen ---------- */
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1000,innerHeight/600);stage.style.transform='scale('+s+')'}
+addEventListener('resize',fit);fit();
+
+/* ---------- assets: real file in /assets, else built-in stand-in drawing ---------- */
+const svg=s=>'data:image/svg+xml;utf8,'+encodeURIComponent(s);
+const peng=(o={})=>{const{mood='happy',gift=0,hat=0,cake=0,tilt=0}=o;
+ const eyes=mood==='cry'?'<circle cx="82" cy="78" r="4" fill="#555"/><circle cx="118" cy="78" r="4" fill="#555"/><path d="M70 90q-8 20 0 30q10-8 8-26z" fill="#8cc9ee"/>'
+  :'<path d="M72 80q9-9 18 0M110 80q9-9 18 0" stroke="#555" stroke-width="4" fill="none" stroke-linecap="round"/>';
+ const arms=gift?'<rect x="68" y="118" width="64" height="58" rx="4" fill="#f2bfd2" stroke="#7a4a58" stroke-width="3"/><path d="M100 118v58M68 146h64" stroke="#7a4a58" stroke-width="3"/><path d="M100 118q-22-22-14-4q8 10 14 4q22-22 14-4q-8 10-14 4" fill="#e3a0bb" stroke="#7a4a58" stroke-width="3"/>'
+  :mood==='happy'?'<path d="M45 150q-30-20-22-34q22 10 34 28M155 150q30-20 22-34q-22 10-34 28" fill="#d6cdb8" stroke="#7a6a50" stroke-width="3"/>':'';
+ return svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250"><g transform="rotate(${tilt} 100 125)">
+ <ellipse cx="100" cy="170" rx="68" ry="72" fill="${mood==='happy'&&!gift?'#d8cfba':'#e8e9ec'}" stroke="#6d6a5a" stroke-width="3"/>
+ <path d="M34 80q0-62 66-62t66 62q-20-26-66-26t-66 26z" fill="#6b4a2a"/>
+ <ellipse cx="100" cy="86" rx="52" ry="42" fill="#fff" opacity=".92"/>${eyes}
+ <path d="M92 96l8 8l8-8z" fill="#e9b640"/><circle cx="68" cy="98" r="7" fill="#f6b6c2" opacity=".7"/><circle cx="132" cy="98" r="7" fill="#f6b6c2" opacity=".7"/>
+ ${arms}${hat?'<path d="M120 20l22-40l10 44z" fill="#b8bdd0" stroke="#666" stroke-width="2"/>':''}
+ ${cake?'<rect x="150" y="150" width="40" height="30" fill="#bfe6f5" stroke="#555" stroke-width="3"/><rect x="154" y="140" width="32" height="14" fill="#f4a4c0"/><rect x="168" y="118" width="4" height="22" fill="#fff" stroke="#555"/><circle cx="170" cy="112" r="5" fill="#f9a825"/>':''}
+ </g></svg>`)};
+const blob=(c,t)=>svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect x="6" y="6" width="108" height="108" rx="30" fill="${c}" opacity=".5"/><text x="60" y="66" font-size="13" text-anchor="middle" fill="#555" font-family="sans-serif">${t}</text></svg>`);
+const photo=(a,b,t)=>svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><circle cx="100" cy="78" r="34" fill="#fff" opacity=".6"/><path d="M30 200q10-70 70-70t70 70z" fill="#fff" opacity=".6"/><text x="100" y="192" font-size="12" text-anchor="middle" fill="#555" font-family="sans-serif">${t}</text></svg>`);
+const bear=(hug)=>svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240"><g stroke="#4a3a10" stroke-width="4">
+ <ellipse cx="${hug?140:100}" cy="150" rx="46" ry="62" fill="#e8b92a"/><circle cx="${hug?140:100}" cy="88" r="42" fill="#e8b92a"/>
+ <ellipse cx="${hug?170:210}" cy="160" rx="44" ry="56" fill="#f3fbff"/><circle cx="${hug?170:210}" cy="96" r="40" fill="#f3fbff"/></g></svg>`);
+const A={ /* name -> [file, standin] */
+ 'penguin-happy':peng({mood:'happy'}),'penguin-cry':peng({mood:'cry',tilt:-18}),'penguin-gift':peng({mood:'sleep',gift:1}),
+ 'penguin-bday':peng({mood:'sleep',hat:1,cake:1}),'chick':blob('#ffe45c','chick'),'party-stuff':blob('#ffd9a0','party'),
+ 'camera':blob('#bfe9e0','camera'),'jar':blob('#bfe0f5','jar'),'bunny':blob('#fff','bunny'),'mouse':blob('#bcd8f2','mouse'),
+ 'cake':blob('#f7c4d6','cake'),'flowers':blob('#ffe28a','flowers'),
+ 'photo-main':photo('#f0d9b5','#c9a27a','photo-main'),'photo-1':photo('#cfd8dc','#90a4ae','photo-1'),'photo-2':photo('#ffe0b2','#bcaaa4','photo-2'),
+ 'photo-3':photo('#b3e5fc','#81c784','photo-3'),'photo-4':photo('#d7ccc8','#a1887f','photo-4'),'photo-5':photo('#b0bec5','#6d4c41','photo-5'),
+ 'couple-main':photo('#d7ecf2','#b9a48a','couple-main'),'couple-2':photo('#e0c9a0','#8d6e63','couple-2'),'couple-3':photo('#90caf9','#ef9a9a','couple-3'),
+ 'bears-apart':bear(0),'bears-hug':bear(1)};
+document.querySelectorAll('img[data-asset]').forEach(im=>{
+  const n=im.dataset.asset;
+  im.onerror=()=>{im.onerror=null;im.src=A[n]};
+  im.src='assets/'+n+'.png';           // <-- drop your original files here (png)
+});
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+let token=0;
+async function typeInto(el,text,speed=70,tk=token){
+  el.textContent='';
+  for(const ch of text){ if(tk!==token)return; el.textContent+=ch; await wait(speed); }
+}
+function show(id){
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('on'));
+  $('s-'+id).classList.add('on'); token++;
+  document.querySelectorAll('#s-'+id+' .sw').forEach(e=>e.classList.remove('in'));
+  scenes[id]&&scenes[id](token);
+}
+const popIn=async(sel,gap=140,tk)=>{
+  const els=document.querySelectorAll(sel);
+  for(const e of els){ if(tk!==token)return; e.classList.add('in'); await wait(gap); }
+};
+
+/* ---------- scene logic ---------- */
+const scenes={
+ async choose(tk){
+  const pgs=[$('pg1'),$('pg2'),$('pg3')]; pgs.forEach(p=>p.classList.remove('show'));
+  const t1=document.querySelector('#s-choose .t1'),t2=document.querySelector('#s-choose .t2');
+  t1.textContent=t2.textContent='';
+  await typeInto(t1,'Choose a penguin',80,tk);
+  for(const p of pgs){ if(tk!==token)return; p.classList.add('show'); await wait(900); }
+  await typeInto(t2,'Each one has something special to say ✨',60,tk);
+ },
+ async bday(tk){},
+ async diary1(tk){ await wait(300); popIn('#s-diary1 .sw',260,tk); },
+ async diary2(tk){ await wait(300); popIn('#s-diary2 .sw',260,tk); },
+ async mine(tk){
+  const t=document.querySelector('.mine-t'); t.style.color='#d9a7b3';
+  await wait(1200); if(tk!==token)return; t.style.color='#c8372d';
+  $('sq1').classList.add('in');$('sq2').classList.add('in');
+  await popIn('#s-mine .sw',700,tk);
+ },
+ async hug(tk){
+  $('apart').style.opacity=1;$('hugged').style.opacity=0;$('miss').textContent='';
+  await wait(900); if(tk!==token)return;
+  await typeInto($('miss'),'I',100,tk); await wait(700);
+  if(tk!==token)return; $('apart').style.opacity=0;$('hugged').style.opacity=1;
+  await typeInto($('miss'),'I MISS YOU',110,tk);
+ },
+ async love(tk){ await wait(600); await typeInto($('love'),'I LOVE YOU',220,tk); }
+};
+
+/* ---------- wiring ---------- */
+let picked=0;
+$('yes').onclick=()=>show('choose');
+$('no').onclick=()=>show('no');
+$('again').onclick=()=>show('gift');
+// first / second / third penguin -> its own story (order as in the video)
+const route={pg1:'bday',pg2:'diary2',pg3:'hug'};
+['pg1','pg2','pg3'].forEach(id=>$(id).onclick=()=>{ if($(id).classList.contains('show')) show(route[id]); });
+// diary2 (collage) continues into "Will you be mine?"  ; hug -> love
+document.querySelectorAll('.next').forEach(b=>b.onclick=()=>show(b.dataset.next));
+// fix: diary2's CLICK ME goes to mine; mine's goes back to choose (set above in markup)
+</script>
+</body>
+</html>
